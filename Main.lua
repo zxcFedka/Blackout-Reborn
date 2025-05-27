@@ -3,6 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Esp.lua'))()
 local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
 local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
+local SafepointModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/SafePoint.lua'))()
 
 local Players = game.Players
 
@@ -73,6 +74,28 @@ local Dropdown = Tab:CreateDropdown({
    Callback = function(Options)
         print(Options)
    end,
+})
+
+local SectionSafePoint = Tab:CreateSection("SafePoint")
+
+local SetPointKeybind = Tab:CreateKeybind({
+    Name = "Bind to set Safepoint",
+    CurrentKeybind = "J",
+    HoldToInteract = false,
+    Flag = "SafePointKeybind",
+    Callback = function()
+		SafepointModule.Set()
+    end,
+})
+
+local TeleportToPointKeybind = Tab:CreateKeybind({
+    Name = "Bind to teleport to Safepoint",
+    CurrentKeybind = "K",
+    HoldToInteract = false,
+    Flag = "TPSafePointKeybind",
+    Callback = function()
+		SafepointModule.Teleport()
+    end,
 })
 
 local SectionFreecam = Tab:CreateSection("Freecam")
