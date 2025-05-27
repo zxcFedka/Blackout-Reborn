@@ -5,7 +5,7 @@ local AimbotModule = {}
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
-local settings = {
+local Settings = {
 	isProgrammaticallyEnabled = false,
 	targetPartName = "Head",
 	smoothness = 15,
@@ -21,7 +21,7 @@ local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
 
 local function isAimingEffectivelyActive()
-	return settings.isProgrammaticallyEnabled or isManuallyActive
+	return Settings.isProgrammaticallyEnabled or isManuallyActive
 end
 
 -- Функция для проверки, находится ли точка в пределах FOV камеры
@@ -41,7 +41,7 @@ end
 
 local function findNearestTarget()
 	local nearestTargetInstance = nil
-	local shortestDistance = settings.maxAimDistance
+	local shortestDistance = Settings.maxAimDistance
 	local localCharacter = localPlayer.Character
 
 	if not localCharacter or not localCharacter:FindFirstChild("HumanoidRootPart") or not camera then -- Добавлена проверка camera
@@ -56,13 +56,13 @@ local function findNearestTarget()
 			local character = player.Character
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
-				local targetPart = character:FindFirstChild(settings.targetPartName)
+				local targetPart = character:FindFirstChild(Settings.targetPartName)
 
 				if humanoid and humanoid.Health > 0 and targetPart and targetPart:IsA("BasePart") then
 					local distance = (localHRP.Position - targetPart.Position).Magnitude
 					if distance < shortestDistance then
 						-- [[ НОВАЯ ПРОВЕРКА FOV ]]
-						if isInFov(targetPart.Position, cameraCFrame, settings.aimFov) then
+						if isInFov(targetPart.Position, cameraCFrame, Settings.aimFov) then
 							local rayOrigin = cameraCFrame.Position -- Используем сохраненный CFrame
 							local rayDirection = (targetPart.Position - rayOrigin).Unit * distance
 							local raycastParams = RaycastParams.new()
@@ -99,7 +99,7 @@ local function onRenderStep(deltaTime)
 		local targetPosition = currentTarget.Position
 		local cameraPosition = camera.CFrame.Position
 		local newLookCFrame = CFrame.lookAt(cameraPosition, targetPosition)
-		local alpha = math.clamp(deltaTime * settings.smoothness, 0, 1)
+		local alpha = math.clamp(deltaTime * Settings.smoothness, 0, 1)
 		camera.CFrame = camera.CFrame:Lerp(newLookCFrame, alpha)
 	end
 end
@@ -108,7 +108,7 @@ end
 function AimbotModule.SetEnabled(enabled)
 	
 	if type(enabled) == "boolean" then
-		settings.isProgrammaticallyEnabled = enabled
+		Settings.isProgrammaticallyEnabled = enabled
 		if not isAimingEffectivelyActive() then
 			currentTarget = nil
 		end
@@ -139,7 +139,7 @@ function AimbotModule.SetSmooth(smoothnessValue)
 
 	local num = tonumber(smoothnessValue)
 	if num and num > 0 then
-		settings.smoothness = num
+		Settings.smoothness = num
 	else
 		warn("AimbotModule.SetSmooth: Expected positive number, got", smoothnessValue)
 	end
@@ -152,7 +152,7 @@ function AimbotModule.SetDistance(distanceValue)
 
 	local num = tonumber(distanceValue)
 	if num and num > 0 then
-		settings.maxAimDistance = num
+		Settings.maxAimDistance = num
 	else
 		warn("AimbotModule.SetDistance: Expected positive number, got", distanceValue)
 	end
@@ -163,8 +163,8 @@ function AimbotModule.SetTargetPart(partName)
 	-- 	print(i,v)
 	-- end
 
-	if type(partName) == "string" and #partName > 0 then
-		settings.targetPartName = partName
+	if type(partName) == "string" then
+		Settings.targetPartName = partName
 	else
 		warn("AimbotModule.SetTargetPart: Expected non-empty string, got", partName)
 	end
@@ -178,8 +178,8 @@ function AimbotModule.SetAimFov(fovValue)
 
 	local num = tonumber(fovValue)
 	if num and num > 0 and num <= 360 then -- FOV должен быть в разумных пределах
-		settings.aimFov = num
-		-- print("AimbotModule: Aim FOV set to", settings.aimFov)
+		Settings.aimFov = num
+		-- print("AimbotModule: Aim FOV set to", Settings.aimFov)
 	else
 		warn("AimbotModule.SetAimFov: Expected number between 0 and 360, got", fovValue)
 	end
