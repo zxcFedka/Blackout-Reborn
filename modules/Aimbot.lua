@@ -105,7 +105,7 @@ local function onRenderStep(deltaTime)
 end
 
 -- Публичные функции модуля
-function AimbotModule.SetEnabled(enabled)
+function AimbotModule:SetEnabled(enabled)
 	
 	if type(enabled) == "boolean" then
 		settings.isProgrammaticallyEnabled = enabled
@@ -117,7 +117,7 @@ function AimbotModule.SetEnabled(enabled)
 	end
 end
 
-function AimbotModule.SetManualAimActive(isActive)
+function AimbotModule:SetManualAimActive(isActive)
 	for i, v in isActive do
 		print(i,v)
 	end
@@ -132,7 +132,7 @@ function AimbotModule.SetManualAimActive(isActive)
 	end
 end
 
-function AimbotModule.SetSmooth(smoothnessValue)
+function AimbotModule:SetSmooth(smoothnessValue)
 	for i, v in smoothnessValue do
 		print(i,v)
 	end
@@ -145,7 +145,7 @@ function AimbotModule.SetSmooth(smoothnessValue)
 	end
 end
 
-function AimbotModule.SetDistance(distanceValue)
+function AimbotModule:SetDistance(distanceValue)
 	for i, v in distanceValue do
 		print(i,v)
 	end
@@ -158,7 +158,7 @@ function AimbotModule.SetDistance(distanceValue)
 	end
 end
 
-function AimbotModule.SetTargetPart(partName)
+function AimbotModule:SetTargetPart(partName)
 	for i, v in partName do
 		print(i,v)
 	end
@@ -171,7 +171,7 @@ function AimbotModule.SetTargetPart(partName)
 end
 
 -- [[ НОВАЯ ПУБЛИЧНАЯ ФУНКЦИЯ ДЛЯ FOV ]]
-function AimbotModule.SetAimFov(fovValue)
+function AimbotModule:SetAimFov(fovValue)
 	for i, v in fovValue do
 		print(i,v)
 	end
