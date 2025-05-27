@@ -61,24 +61,22 @@ local PlayerColorPicker = Tab:CreateColorPicker({
     end
 })
 
-local PlayersList = {}
+-- local PlayersList = {}
 
-for i, v in Players:GetPlayers() do
-    PlayersList[v.Name] = true
-    print(i,v)
-end
+-- for i, v in Players:GetPlayers() do
+--     PlayersList[v.Name] = true
+-- end
 
-
-local Dropdown = Tab:CreateDropdown({
-   Name = "Friend list",
-   Options = PlayersList,
-   CurrentOption = {},
-   MultipleOptions = false,
-   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Options)
-        print(Options)
-   end,
-})
+-- local Dropdown = Tab:CreateDropdown({
+--    Name = "Friend list",
+--    Options = PlayersList,
+--    CurrentOption = {},
+--    MultipleOptions = false,
+--    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+--    Callback = function(Options)
+--         print(Options)
+--    end,
+-- })
 
 local SectionSafePoint = Tab:CreateSection("SafePoint")
 
