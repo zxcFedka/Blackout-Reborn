@@ -12,10 +12,6 @@ local FriendList = {
 }
 
 local HIGHLIGHT_NAME = "MyCustomPlayerHighlight"
-local ENEMY_NAMETAG_COLOR = Color3.fromRGB(255, 180, 0)
-local DEFAULT_NAMETAG_COLOR = Color3.fromRGB(255, 255, 255)
-local DEFAULT_NAMETAG_STROKE_COLOR = Color3.fromRGB(0,0,0)
-local DEFAULT_NAMETAG_STROKE_TRANSPARENCY = 1 -- 0 = непрозрачный, 1 = прозрачный
 
 local HighlightTemplate = Instance.new("Highlight")
 HighlightTemplate.Name = HIGHLIGHT_NAME
@@ -62,39 +58,6 @@ local function _updatePlayerVisuals(player)
 		end
 	end
 
-	-- --- Подсветка ника ---
-	if head then
-		local nameGui = head:FindFirstChild("NameTag") or head:FindFirstChildOfClass("BillboardGui")
-		if nameGui then
-			local nameLabel = nameGui:FindFirstChild("NameLabel") or nameGui:FindFirstChildOfClass("TextLabel")
-			if nameLabel and nameLabel:IsA("TextLabel") then
-				if not isEspActive or isFriend then -- Если ESP выключен ИЛИ это друг
-					if nameLabel:GetAttribute("CustomStyledByESP") then
-						nameLabel.TextColor3 = nameLabel:GetAttribute("OriginalTextColor") or DEFAULT_NAMETAG_COLOR
-						nameLabel.TextStrokeColor3 = nameLabel:GetAttribute("OriginalStrokeColor") or DEFAULT_NAMETAG_STROKE_COLOR
-						nameLabel.TextStrokeTransparency = nameLabel:GetAttribute("OriginalStrokeTransparency") or DEFAULT_NAMETAG_STROKE_TRANSPARENCY
-
-						nameLabel:SetAttribute("CustomStyledByESP", nil)
-						nameLabel:SetAttribute("OriginalTextColor", nil)
-						nameLabel:SetAttribute("OriginalStrokeColor", nil)
-						nameLabel:SetAttribute("OriginalStrokeTransparency", nil)
-					end
-				else -- ESP включен И это НЕ друг
-					if not nameLabel:GetAttribute("CustomStyledByESP") then
-						nameLabel:SetAttribute("OriginalTextColor", nameLabel.TextColor3)
-						nameLabel:SetAttribute("OriginalStrokeColor", nameLabel.TextStrokeColor3)
-						nameLabel:SetAttribute("OriginalStrokeTransparency", nameLabel.TextStrokeTransparency)
-
-						nameLabel.TextColor3 = ENEMY_NAMETAG_COLOR
-						nameLabel.TextStrokeColor3 = Color3.fromRGB(0,0,0)
-						nameLabel.TextStrokeTransparency = 0.5
-
-						nameLabel:SetAttribute("CustomStyledByESP", true)
-					end
-				end
-			end
-		end
-	end
 end
 
 --[[
