@@ -4,6 +4,8 @@ local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxc
 local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
 local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
 
+local Players = game.Players
+
 local Window = Rayfield:CreateWindow({
    Name = "Blackout zalupa",
    Icon = 0,
@@ -34,6 +36,43 @@ local ToggleEsp = Tab:CreateToggle({ -- Используем SectionEsp
         EspModule:SetEnabled(EspEnabled)
     end,
     Flag = "EspToggle" -- Добавь флаг для сохранения
+})
+
+local FriendColorPicker = Tab:CreateColorPicker({
+    Name = "Friend Color",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        print(Value)
+        EspModule:SetFriendFillColor(Value)
+    end
+})
+
+local PlayerColorPicker = Tab:CreateColorPicker({
+    Name = "Enemy Color",
+    Color = Color3.fromRGB(255,255,255),
+    Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        print(Value)
+        EspModule:SetFillColor(Value)
+    end
+})
+
+local PlayersList = {}
+
+for i, v in Players do
+    PlayersList[i] = true
+end
+
+local Dropdown = Tab:CreateDropdown({
+   Name = "Friend list",
+   Options = PlayersList,
+   CurrentOption = {},
+   MultipleOptions = false,
+   Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Options)
+        print(Options)
+   end,
 })
 
 local SectionFreecam = Tab:CreateSection("Freecam")
@@ -149,3 +188,17 @@ local aimFovSlider = Tab:CreateSlider({
         end
     end,
 })
+
+Players.PlayerAdded:Connect(function(player)
+    if PlayersList[player] then
+        return 
+    else
+        PlayersList[player] = true
+        end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+     if PlayersList[player] then
+        PlayersList[player] = nil
+     end
+end)
