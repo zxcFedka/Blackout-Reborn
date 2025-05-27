@@ -1,7 +1,6 @@
 -- [[ ----- Сначала твой код загрузки Rayfield и других модулей ----- ]]
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- Предположим, что EspModule и FreecamModule загружаются и работают как задумано
 local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Esp.lua'))()
 local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
 local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
@@ -29,7 +28,7 @@ local Tab = Window:CreateTab("Main")
 
 local SectionEsp = Tab:CreateSection("Esp")
 local EspEnabled = false
-local ToggleEsp = SectionEsp:CreateToggle({ -- Используем SectionEsp
+local ToggleEsp = Tab:CreateToggle({ -- Используем SectionEsp
     Name = "Toggle Esp",
     Callback = function()
         EspEnabled = not EspEnabled
@@ -40,7 +39,7 @@ local ToggleEsp = SectionEsp:CreateToggle({ -- Используем SectionEsp
 
 local SectionFreecam = Tab:CreateSection("Freecam")
 local FreecamEnabled = false
-local ToggleFreecam = SectionFreecam:CreateToggle({ -- Используем SectionFreecam
+local ToggleFreecam = Tab:CreateToggle({ -- Используем SectionFreecam
     Name = "Toggle Freecam",
     Callback = function()
         FreecamEnabled = not FreecamEnabled
@@ -57,7 +56,7 @@ local AimbotProgrammaticallyEnabled = false -- Начальное состоян
 AimbotModule:SetEnabled(AimbotProgrammaticallyEnabled) -- Устанавливаем начальное состояние в модуле
 
 -- Кейбайнд для активации аима при зажатии
-local aimbotKeybind = SectionAimbot:CreateKeybind({
+local aimbotKeybind = Tab:CreateKeybind({
     Name = "Hold to Aim",
     CurrentKeybind = "Q", -- Начальная клавиша, будет сохранена/загружена Rayfield
     HoldToInteract = true, -- Важно!
@@ -79,7 +78,7 @@ local characterParts = {
 local defaultAimPart = "Head"
 AimbotModule:SetTargetPart(defaultAimPart) -- Устанавливаем начальное значение в модуле
 
-local aimPartDropdown = SectionAimbot:CreateDropdown({
+local aimPartDropdown = Tab:CreateDropdown({
     Name = "Aim Part",
     Options = characterParts,
     CurrentOption = {defaultAimPart}, -- Rayfield ожидает таблицу, даже для одиночного выбора
@@ -96,7 +95,7 @@ local aimPartDropdown = SectionAimbot:CreateDropdown({
 local defaultSmoothness = 15
 AimbotModule:SetSmooth(defaultSmoothness) -- Устанавливаем начальное значение
 
-local smoothnessSlider = SectionAimbot:CreateSlider({
+local smoothnessSlider = Tab:CreateSlider({
     Name = "Aim Smoothness",
     Range = {5, 50}, -- Диапазон значений (мин, макс)
     Increment = 1, -- Шаг изменения
@@ -112,7 +111,7 @@ local smoothnessSlider = SectionAimbot:CreateSlider({
 local defaultDistance = 500
 AimbotModule:SetDistance(defaultDistance) -- Устанавливаем начальное значение
 
-local distanceSlider = SectionAimbot:CreateSlider({
+local distanceSlider = Tab:CreateSlider({
     Name = "Max Aim Distance",
     Range = {50, 2000},
     Increment = 10,
@@ -127,7 +126,7 @@ local distanceSlider = SectionAimbot:CreateSlider({
 local defaultAimFov = 90 -- Начальное значение FOV (полный угол конуса)
 AimbotModule:SetAimFov(defaultAimFov) -- Устанавливаем начальное значение в модуле
 
-local aimFovSlider = SectionAimbot:CreateSlider({
+local aimFovSlider = Tab:CreateSlider({
     Name = "Aim FOV ( degrés )", -- Field of View
     Range = {10, 180},     -- Диапазон значений (например, от узкого 10 до широкого 180 градусов)
     Increment = 1,          -- Шаг изменения
