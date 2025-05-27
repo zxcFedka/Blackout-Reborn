@@ -63,7 +63,9 @@ local PlayersList = {}
 
 for i, v in Players:GetChildren() do
     PlayersList[i] = true
+    print(i)
 end
+
 
 local Dropdown = Tab:CreateDropdown({
    Name = "Friend list",
