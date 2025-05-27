@@ -1,4 +1,3 @@
--- [[ ----- Сначала твой код загрузки Rayfield и других модулей ----- ]]
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Esp.lua'))()
