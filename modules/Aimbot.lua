@@ -106,6 +106,7 @@ end
 
 -- Публичные функции модуля
 function AimbotModule.SetEnabled(enabled)
+	
 	if type(enabled) == "boolean" then
 		settings.isProgrammaticallyEnabled = enabled
 		if not isAimingEffectivelyActive() then
@@ -117,6 +118,10 @@ function AimbotModule.SetEnabled(enabled)
 end
 
 function AimbotModule.SetManualAimActive(isActive)
+	for i, v in isActive do
+		print(i,v)
+	end
+
 	if type(isActive) == "boolean" then
 		isManuallyActive = isActive
 		if not isAimingEffectivelyActive() then
@@ -128,6 +133,10 @@ function AimbotModule.SetManualAimActive(isActive)
 end
 
 function AimbotModule.SetSmooth(smoothnessValue)
+	for i, v in smoothnessValue do
+		print(i,v)
+	end
+
 	local num = tonumber(smoothnessValue)
 	if num and num > 0 then
 		settings.smoothness = num
@@ -137,6 +146,10 @@ function AimbotModule.SetSmooth(smoothnessValue)
 end
 
 function AimbotModule.SetDistance(distanceValue)
+	for i, v in distanceValue do
+		print(i,v)
+	end
+
 	local num = tonumber(distanceValue)
 	if num and num > 0 then
 		settings.maxAimDistance = num
@@ -146,6 +159,10 @@ function AimbotModule.SetDistance(distanceValue)
 end
 
 function AimbotModule.SetTargetPart(partName)
+	for i, v in partName do
+		print(i,v)
+	end
+
 	if type(partName) == "string" and #partName > 0 then
 		settings.targetPartName = partName
 	else
@@ -155,6 +172,10 @@ end
 
 -- [[ НОВАЯ ПУБЛИЧНАЯ ФУНКЦИЯ ДЛЯ FOV ]]
 function AimbotModule.SetAimFov(fovValue)
+	for i, v in fovValue do
+		print(i,v)
+	end
+
 	local num = tonumber(fovValue)
 	if num and num > 0 and num <= 360 then -- FOV должен быть в разумных пределах
 		settings.aimFov = num
