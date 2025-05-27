@@ -2,9 +2,9 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Предположим, что EspModule и FreecamModule загружаются и работают как задумано
-local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/Esp.lua'))()
-local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/Freecam.lua'))()
-local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/Aimbot.lua'))()
+local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Esp.lua'))()
+local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
+local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
 
 local Window = Rayfield:CreateWindow({
    Name = "Blackout zalupa",
