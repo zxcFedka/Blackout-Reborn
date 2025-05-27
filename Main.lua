@@ -47,35 +47,45 @@ local ToggleFreecam = Tab:CreateToggle({ -- Используем SectionFreecam
     Flag = "FreecamToggle" -- Добавь флаг для сохранения
 })
 
+local FreecamKeybind = Tab:CreateKeybind({
+    Name = "Freecam bind",
+    CurrentKeybind = "M",
+    HoldToInteract = false,
+    Flag = "FreecamHoldKeybind",
+    Callback = function()
+        FreecamEnabled = not FreecamEnabled
+		ToggleFreecam:Set(FreecamEnabled)
+
+        FreecamModule:SetEnabled(FreecamEnabled)
+    end,
+})
+
 
 local SectionAimbot = Tab:CreateSection("Aimbot")
 
 -- Кнопка-переключатель для полного включения/выключения аимбота (программно)
 local AimbotProgrammaticallyEnabled = false -- Начальное состояние
-AimbotModule:SetEnabled(AimbotProgrammaticallyEnabled) -- Устанавливаем начальное состояние в модуле
+AimbotModule.SetEnabled(AimbotProgrammaticallyEnabled) -- Устанавливаем начальное состояние в модуле
 
--- Кейбайнд для активации аима при зажатии
 local aimbotKeybind = Tab:CreateKeybind({
     Name = "Hold to Aim",
-    CurrentKeybind = "Q", -- Начальная клавиша, будет сохранена/загружена Rayfield
-    HoldToInteract = true, -- Важно!
+    CurrentKeybind = "Q",
+    HoldToInteract = true,
     Flag = "AimbotHoldKeybind",
-    Callback = function(isHolding) -- Rayfield передает true при нажатии, false при отпускании для HoldToInteract
-        AimbotModule:SetManualAimActive(isHolding)
+    Callback = function(isHolding)
+		AimbotModule.SetManualAimActive(isHolding)
     end,
 })
 
 -- Выпадающий список для выбора части тела
 local characterParts = {
-    "Head", "Torso", "HumanoidRootPart",
-    "UpperTorso", "LowerTorso", -- R15
-    "LeftUpperArm", "LeftLowerArm", "LeftHand", -- R15
-    "RightUpperArm", "RightLowerArm", "RightHand", -- R15
-    "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", -- R15
-    "RightUpperLeg", "RightLowerLeg", "RightFoot" -- R15
+    "Head", "Torso",
+	"HumanoidRootPart",
+	"LeftArm", "RightArm",
+	"LeftLeg", "RightLeg"
 }
 local defaultAimPart = "Head"
-AimbotModule:SetTargetPart(defaultAimPart) -- Устанавливаем начальное значение в модуле
+AimbotModule.SetTargetPart(defaultAimPart) -- Устанавливаем начальное значение в модуле
 
 local aimPartDropdown = Tab:CreateDropdown({
     Name = "Aim Part",
@@ -86,13 +96,13 @@ local aimPartDropdown = Tab:CreateDropdown({
     Callback = function(selectedOptions) -- Rayfield передает таблицу выбранных опций
         local newTargetPart = selectedOptions[1]
             
-        AimbotModule:SetTargetPart(newTargetPart)
+        AimbotModule.SetTargetPart(newTargetPart)
     end,
 })
 
 -- Слайдер для плавности
 local defaultSmoothness = 15
-AimbotModule:SetSmooth(defaultSmoothness) -- Устанавливаем начальное значение
+AimbotModule.SetSmooth(defaultSmoothness) -- Устанавливаем начальное значение
 
 local smoothnessSlider = Tab:CreateSlider({
     Name = "Aim Smoothness",
@@ -102,13 +112,13 @@ local smoothnessSlider = Tab:CreateSlider({
     CurrentValue = defaultSmoothness, -- Начальное значение
     Flag = "AimbotSmoothnessSlider",
     Callback = function(value)
-        AimbotModule:SetSmooth(value)
+        AimbotModule.SetSmooth(value)
     end,
 })
 
 -- Слайдер или инпут для дистанции
 local defaultDistance = 500
-AimbotModule:SetDistance(defaultDistance) -- Устанавливаем начальное значение
+AimbotModule.SetDistance(defaultDistance) -- Устанавливаем начальное значение
 
 local distanceSlider = Tab:CreateSlider({
     Name = "Max Aim Distance",
@@ -118,12 +128,12 @@ local distanceSlider = Tab:CreateSlider({
     CurrentValue = defaultDistance,
     Flag = "AimbotDistanceSlider",
     Callback = function(value)
-         AimbotModule:SetDistance(value)
+         AimbotModule.SetDistance(value)
     end,
 })
 
 local defaultAimFov = 90 -- Начальное значение FOV (полный угол конуса)
-AimbotModule:SetAimFov(defaultAimFov) -- Устанавливаем начальное значение в модуле
+AimbotModule.SetAimFov(defaultAimFov) -- Устанавливаем начальное значение в модуле
 
 local aimFovSlider = Tab:CreateSlider({
     Name = "Aim FOV ( degrés )", -- Field of View
@@ -134,7 +144,7 @@ local aimFovSlider = Tab:CreateSlider({
     Flag = "AimbotFovSlider",   -- Уникальный флаг
     Callback = function(value)
         if AimbotModule then
-            AimbotModule:SetAimFov(value)
+            AimbotModule.SetAimFov(value)
             print("Aimbot FOV set to:", value)
         end
     end,

@@ -51,8 +51,9 @@ local function _updatePlayerVisuals(player)
 				existingHighlight:Destroy()
 			end
 		else -- ESP включен И это НЕ друг
+		local newHighlight
 			if not existingHighlight then
-				local newHighlight = HighlightTemplate:Clone()
+				newHighlight = HighlightTemplate:Clone()
 				newHighlight.Adornee = character -- Важно: Adornee должен быть моделью для корректной работы Highlight
 				newHighlight.Parent = hrp
 			elseif not newHighlight.Enabled then
