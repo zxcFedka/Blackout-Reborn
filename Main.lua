@@ -63,7 +63,7 @@ local PlayersList = {}
 
 for i, v in Players:GetChildren() do
     PlayersList[i] = true
-    print(i)
+    print(v)
 end
 
 
