@@ -6,11 +6,7 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer -- Получаем локального игрока
 
 -- Configuration (локальные для модуля)
-local FriendList = {
-	-- ["whylaway"] = true,
-	["aphroishak"] = true,
-	-- ["cursed13371"] = true
-}
+local FriendList = {}
 
 local HIGHLIGHT_NAME = "MyCustomPlayerHighlight"
 local FRIEND_HIGHLIGHT_NAME = "MyCustomFriendHighlight" -- Имя для хайлайта друзей
@@ -245,6 +241,7 @@ end
 	Функция для установки цвета заливки для обычных игроков (не друзей).
 	@param newColor Color3.
 ]]
+
 function ESPModule:SetFillColor(newColor)
 	if typeof(newColor) == "Color3" then
 		HighlightTemplate.FillColor = newColor

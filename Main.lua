@@ -61,7 +61,7 @@ local PlayerColorPicker = Tab:CreateColorPicker({
 
 local PlayersList = {}
 
-for i, v in Players do
+for i, v in Players:GetChildren() do
     PlayersList[i] = true
 end
 
