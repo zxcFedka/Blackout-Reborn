@@ -26,6 +26,8 @@ local Window = Rayfield:CreateWindow({
    KeySettings = { Title = "Untitled", Subtitle = "Key System", Note = "No method of obtaining the key is provided", FileName = "Key", SaveKey = true, GrabKeyFromSite = false, Key = {"Hello"} }
 })
 
+warn("Initilize...")
+
 local Tab = Window:CreateTab("Main")
 
 local SectionEsp = Tab:CreateSection("Esp")
