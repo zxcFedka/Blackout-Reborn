@@ -35,6 +35,8 @@ local VisualTab = Window:CreateTab("Visual")
 
 local MiscTab = Window:CreateTab("Misc")
 
+local FriendsTab = Window:CreateTab("Friends")
+
 local SectionEsp = VisualTab:CreateSection("Esp")
 local EspEnabled = false
 local ToggleEsp = VisualTab:CreateToggle({ -- Используем SectionEsp
@@ -84,8 +86,6 @@ local PlayerColorPicker = VisualTab:CreateColorPicker({
 --         print(Options)
 --    end,
 -- })
-
-local FriendsTab = Window:CreateTab("Friends")
 
 local AddFriendsSection = FriendsTab:CreateSection("Add Friend")
 
@@ -161,7 +161,7 @@ local SetPointKeybind = MiscTab:CreateKeybind({
             Duration = 1.5,
             Image = 134028882209847,
         })
-        
+
     end,
 })
 
