@@ -91,7 +91,7 @@ local AddFriendsSection = FriendsTab:CreateSection("Add Friend")
 
 local FriendsDropdown
 
-local InputFriend = Tab:CreateInput({
+local InputFriend = FriendsTab:CreateInput({
    Name = "Enter Friend Name",
    CurrentValue = "",
    PlaceholderText = "Friend Name",
@@ -127,7 +127,7 @@ FriendsDropdown = FriendsTab:CreateDropdown({
    end,
 })
 
-local RemoveFriend = Tab:CreateButton({
+local RemoveFriend = FriendsTab:CreateButton({
    Name = "Remove Selected Friend",
    Callback = function()
     local success = FriendsModule:Remove(SelectedFriend)
