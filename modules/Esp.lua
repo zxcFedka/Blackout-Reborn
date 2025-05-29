@@ -14,16 +14,6 @@ local BILLBOARD_NAME = "CustomPlayerBillboard"
 
 -- Загружаем функцию для создания билборда
 local createBillboardAndLabels = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Billboard.lua'))()
-if typeof(createBillboardAndLabels) ~= "function" then
-	warn("ESPModule: Failed to load Billboard module or it did not return a function.")
-	createBillboardAndLabels = function()
-		warn("ESPModule: Using fallback billboard creator.")
-		local b = Instance.new("BillboardGui")
-		local pl = Instance.new("TextLabel", b); pl.Name = "player"; pl.Text = "Error"
-		local hl = Instance.new("TextLabel", b); hl.Name = "hp"; hl.Text = "N/A"
-		return b, pl, hl
-	end
-end
 
 -- Шаблон Highlight для обычных игроков (не друзей)
 local HighlightTemplate = Instance.new("Highlight")
@@ -167,8 +157,46 @@ end
 --[[
 	Обработчик добавления персонажа игроку.
 ]]
+--[[
+	Обработчик добавления персонажа игроку.
+]]
 local function _onCharacterAdded(player)
-	task.wait(0.2) 
+	local character = player.Character
+	if not character then
+		-- Этого не должно происходить, если CharacterAdded только что сработал,
+		-- но на всякий случай проверяем.
+		return
+	end
+
+	-- Более надежно ждем появления головы и гуманоида.
+	-- Даем до 2 секунд на их появление.
+	local head = character:WaitForChild("Head", 2)
+	local humanoid = character:WaitForChild("Humanoid", 2)
+
+	if not head or not humanoid then
+		-- Если части не найдены даже после ожидания,
+		-- _updatePlayerVisuals все равно ничего не сможет сделать с билбордом.
+		-- Можно добавить предупреждение, если нужно для отладки.
+		warn("ESPModule: Head or Humanoid not found for " .. player.Name .. " after CharacterAdded wait.")
+	end
+
+	-- task.wait(0.2) теперь менее критичен, если мы используем WaitForChild.
+	-- Однако, если WaitForChild завершился быстро (части уже были), небольшая задержка
+	-- все еще может быть полезна для полной инициализации других скриптов/частей.
+	-- Если WaitForChild взял все 2 секунды, эта задержка будет поверх.
+	-- Можно убрать или оставить task.wait() в зависимости от тестов.
+	-- Оставим для совместимости с предыдущим поведением, но его эффект будет после WaitForChild.
+	task.wait(0.1) -- Можно уменьшить или убрать, если WaitForChild достаточно.
+
+	-- Убедимся, что персонаж все еще тот, с которым мы начали,
+	-- и что он все еще действителен.
+	if player.Character ~= character or not character.Parent then
+		-- Персонаж мог быть удален или заменен очень быстро.
+		-- _updatePlayerVisuals обработает текущее состояние.
+		_updatePlayerVisuals(player)
+		return
+	end
+	
 	_updatePlayerVisuals(player)
 end
 

@@ -30,9 +30,13 @@ warn("Initilize...")
 
 local Tab = Window:CreateTab("Main")
 
-local SectionEsp = Tab:CreateSection("Esp")
+local VisualTab = Window:CreateTab("Visual")
+
+local MiscTab = Window:CreateTab("Misc")
+
+local SectionEsp = VisualTab:CreateSection("Esp")
 local EspEnabled = false
-local ToggleEsp = Tab:CreateToggle({ -- Используем SectionEsp
+local ToggleEsp = VisualTab:CreateToggle({ -- Используем SectionEsp
     Name = "Toggle Esp",
     Callback = function()
         EspEnabled = not EspEnabled
@@ -41,7 +45,7 @@ local ToggleEsp = Tab:CreateToggle({ -- Используем SectionEsp
     Flag = "EspToggle" -- Добавь флаг для сохранения
 })
 
-local FriendColorPicker = Tab:CreateColorPicker({
+local FriendColorPicker = VisualTab:CreateColorPicker({
     Name = "Friend Color",
     Color = Color3.fromRGB(255,255,255),
     Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -51,7 +55,7 @@ local FriendColorPicker = Tab:CreateColorPicker({
     end
 })
 
-local PlayerColorPicker = Tab:CreateColorPicker({
+local PlayerColorPicker = VisualTab:CreateColorPicker({
     Name = "Enemy Color",
     Color = Color3.fromRGB(255,255,255),
     Flag = "ColorPicker1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -80,9 +84,9 @@ local PlayerColorPicker = Tab:CreateColorPicker({
 --    end,
 -- })
 
-local SectionSafePoint = Tab:CreateSection("SafePoint")
+local SectionSafePoint = MiscTab:CreateSection("SafePoint")
 
-local SetPointKeybind = Tab:CreateKeybind({
+local SetPointKeybind = MiscTab:CreateKeybind({
     Name = "Bind to set Safepoint",
     CurrentKeybind = "J",
     HoldToInteract = false,
@@ -92,7 +96,7 @@ local SetPointKeybind = Tab:CreateKeybind({
     end,
 })
 
-local TeleportToPointKeybind = Tab:CreateKeybind({
+local TeleportToPointKeybind = MiscTab:CreateKeybind({
     Name = "Bind to teleport to Safepoint",
     CurrentKeybind = "K",
     HoldToInteract = false,
@@ -102,25 +106,26 @@ local TeleportToPointKeybind = Tab:CreateKeybind({
     end,
 })
 
-local SectionFreecam = Tab:CreateSection("Freecam")
+local SectionFreecam = MiscTab:CreateSection("Freecam")
 local FreecamEnabled = false
-local ToggleFreecam = Tab:CreateToggle({ -- Используем SectionFreecam
-    Name = "Toggle Freecam",
-    Callback = function()
-        FreecamEnabled = not FreecamEnabled
-        FreecamModule:SetEnabled(FreecamEnabled)
-    end,
-    Flag = "FreecamToggle" -- Добавь флаг для сохранения
-})
+-- local ToggleFreecam = MiscTab:CreateToggle({ -- Используем SectionFreecam
+--     Name = "Toggle Freecam",
+--     Callback = function()
+--         FreecamEnabled = not FreecamEnabled
+--         FreecamModule:SetEnabled(FreecamEnabled)
+--     end,
+--     Flag = "FreecamToggle" -- Добавь флаг для сохранения
+-- })
 
-local FreecamKeybind = Tab:CreateKeybind({
+local FreecamKeybind = MiscTab:CreateKeybind({
     Name = "Freecam bind",
     CurrentKeybind = "M",
     HoldToInteract = false,
     Flag = "FreecamHoldKeybind",
-    Callback = function()
+    Callback = function(a)
+        print(a)
         FreecamEnabled = not FreecamEnabled
-		ToggleFreecam:Set(FreecamEnabled)
+		-- ToggleFreecam:Set(FreecamEnabled)
 
         FreecamModule:SetEnabled(FreecamEnabled)
     end,
