@@ -57,6 +57,8 @@ function module.Set()
 	CurrentPoint = Point
 
 	distance = Distance
+
+	return Character.PrimaryPart.Position
 end
 
 function module.Teleport()

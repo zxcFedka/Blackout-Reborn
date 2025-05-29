@@ -4,6 +4,7 @@ local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxc
 local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
 local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
 local SafepointModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/SafePoint.lua'))()
+local FriendsModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Friends.lua'))()
 
 local Players = game.Players
 
@@ -84,6 +85,66 @@ local PlayerColorPicker = VisualTab:CreateColorPicker({
 --    end,
 -- })
 
+local FriendsTab = Window:CreateTab("Friends")
+
+local AddFriendsSection = FriendsTab:CreateSection("Add Friend")
+
+local FriendsDropdown
+
+local InputFriend = Tab:CreateInput({
+   Name = "Enter Friend Name",
+   CurrentValue = "",
+   PlaceholderText = "Friend Name",
+   RemoveTextAfterFocusLost = false,
+   Flag = "Input1",
+   Callback = function(Text)
+    local success = FriendsModule:Add(Text)
+    if success then
+        Rayfield:Notify({
+            Title = "Friend Alert",
+            Content = Text.." added",
+            Duration = 1.5,
+            Image = 4483362458,
+        })
+
+        FriendsDropdown:Refresh(FriendsModule:GetFriends())
+    end
+   end,
+})
+
+local FriendsSection = FriendsTab:CreateSection("Friends")
+
+local SelectedFriend
+
+FriendsDropdown = FriendsTab:CreateDropdown({
+   Name = "Friends",
+   Options = {},
+   CurrentOption = {},
+   MultipleOptions = false,
+   Flag = "Dropdown1Friends", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Options)
+        SelectedFriend = Options
+   end,
+})
+
+local RemoveFriend = Tab:CreateButton({
+   Name = "Remove Selected Friend",
+   Callback = function()
+    local success = FriendsModule:Remove(SelectedFriend)
+    if success then
+
+        Rayfield:Notify({
+            Title = "Friend Alert",
+            Content = SelectedFriend.." removed",
+            Duration = 1.5,
+            Image = 134028882209847,
+        })
+
+        FriendsDropdown:Refresh(FriendsModule:GetFriends())
+    end
+   end,
+})
+
 local SectionSafePoint = MiscTab:CreateSection("SafePoint")
 
 local SetPointKeybind = MiscTab:CreateKeybind({
@@ -92,7 +153,15 @@ local SetPointKeybind = MiscTab:CreateKeybind({
     HoldToInteract = false,
     Flag = "SafePointKeybind",
     Callback = function()
-		SafepointModule.Set()
+		local pos = SafepointModule.Set()
+
+        Rayfield:Notify({
+            Title = "Safepoint Alert",
+            Content = "Safe point Set at "..pos,
+            Duration = 1.5,
+            Image = 134028882209847,
+        })
+        
     end,
 })
 
@@ -122,8 +191,7 @@ local FreecamKeybind = MiscTab:CreateKeybind({
     CurrentKeybind = "M",
     HoldToInteract = false,
     Flag = "FreecamHoldKeybind",
-    Callback = function(a)
-        print(a)
+    Callback = function()
         FreecamEnabled = not FreecamEnabled
 		-- ToggleFreecam:Set(FreecamEnabled)
 

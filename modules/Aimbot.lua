@@ -2,6 +2,8 @@
 
 local AimbotModule = {}
 
+local FriendsModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Friends.lua'))()
+
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
@@ -10,9 +12,7 @@ local Settings = {
 	targetPartName = "Head",
 	smoothness = 15,
 	maxAimDistance = 500,
-	aimFov = 90, -- <<< НОВАЯ НАСТРОЙКА: радиус захвата в градусах (от центра экрана)
-	               -- Значение 90 означает конус в 180 градусов перед камерой.
-	               -- Меньшие значения (например, 10-30) сделают захват более точным.
+	aimFov = 90,
 }
 
 local isManuallyActive = false
@@ -52,7 +52,8 @@ local function findNearestTarget()
 	local cameraCFrame = camera.CFrame -- Получаем CFrame камеры один раз
 
 	for _, player in ipairs(Players:GetPlayers()) do
-		if player ~= localPlayer then
+
+		if player ~= localPlayer and not FriendsModule:IsFriend(player.Name)  then
 			local character = player.Character
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")

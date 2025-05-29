@@ -411,6 +411,7 @@ function ESPModule:SetEnabled(enable)
 			connections.HeartbeatGlobal:Disconnect()
 			connections.HeartbeatGlobal = nil
 		end
+		
 		-- PlayerAdded и PlayerRemoving можно оставить активными, т.к. они просто управляют CharacterAdded.
 		-- А CharacterAdded соединения будут удалены в _onPlayerRemoving.
         -- Либо можно отключать и их, если модуль полностью "выгружается":
