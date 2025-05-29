@@ -18,8 +18,8 @@ local Window = Rayfield:CreateWindow({
    DisableBuildWarnings = false,
    ConfigurationSaving = {
       Enabled = true,
-      FolderName = nil,
-      FileName = "Big Hub"
+      FolderName = "Blackout Config",
+      FileName = "Config"
    },
    Discord = { Enabled = false, Invite = "noinvitelink", RememberJoins = true },
    KeySystem = false,
