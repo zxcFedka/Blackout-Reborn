@@ -6,6 +6,8 @@ function FriendModule:Add(name: string)
     if not Friends[name] then
         Friends[name] = name
 
+        print(Friends,name)
+
         return true
     end
 
@@ -15,6 +17,8 @@ end
 function FriendModule:Remove(name: string)
     if Friends[name] then
         Friends[name] = nil
+
+        print(Friends,name)
 
         return true
     end
