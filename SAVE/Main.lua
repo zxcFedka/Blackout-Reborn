@@ -136,7 +136,7 @@ local InputFriend = FriendsTab:CreateInput({
             Image = 4483362458,
         })
 
-        FriendsDropdown:Refresh(GetFriends)
+        FriendsDropdown:Refresh(GetFriends())
     end
    end,
 })
@@ -169,7 +169,7 @@ local RemoveFriend = FriendsTab:CreateButton({
             Image = 134028882209847,
         })
 
-        FriendsDropdown:Refresh(GetFriends)
+        FriendsDropdown:Refresh(GetFriends())
     end
    end,
 })
@@ -318,16 +318,16 @@ local aimFovSlider = Tab:CreateSlider({
     end,
 })
 
-Players.PlayerAdded:Connect(function(player)
-    if PlayersList[player] then
-        return 
-    else
-        PlayersList[player] = true
-        end
-end)
+-- Players.PlayerAdded:Connect(function(player)
+--     if PlayersList[player] then
+--         return 
+--     else
+--         PlayersList[player] = true
+--         end
+-- end)
 
-Players.PlayerRemoving:Connect(function(player)
-     if PlayersList[player] then
-        PlayersList[player] = nil
-     end
-end)
+-- Players.PlayerRemoving:Connect(function(player)
+--      if PlayersList[player] then
+--         PlayersList[player] = nil
+--      end
+-- end)
