@@ -30,33 +30,31 @@ warn("Initilize...")
 
 local Friends = {}
 
-local FriendModule = {}
-
-function FriendModule:Add(name: string)
+function AddFriend(name)
     if not Friends[name] then
         Friends[name] = true
-        FriendModule:EventUpdate()
+        UpdateFriends()
 
         return true
     end
     return nil
 end
 
-function FriendModule:Remove(name: string)
+function RemoveFriend(name)
     if Friends[name] then
         Friends[name] = nil
-        FriendModule:EventUpdate()
+       UpdateFriends()
 
         return true
     end
     return nil
 end
 
-function FriendModule:Get()
+function GetFriends()
     return Friends
 end
 
-function FriendModule:EventUpdate()
+function UpdateFriends()
     AimbotModule:Update(Friends)
 end
 
@@ -129,7 +127,7 @@ local InputFriend = FriendsTab:CreateInput({
    RemoveTextAfterFocusLost = false,
    Flag = "Input1",
    Callback = function(Text)
-    local success = FriendModule:Add(Text)
+    local success = AddFriend(Text)
     if success then
         Rayfield:Notify({
             Title = "Friend Alert",
@@ -138,7 +136,7 @@ local InputFriend = FriendsTab:CreateInput({
             Image = 4483362458,
         })
 
-        FriendsDropdown:Refresh(FriendModule:Get())
+        FriendsDropdown:Refresh(GetFriends)
     end
    end,
 })
@@ -161,7 +159,7 @@ FriendsDropdown = FriendsTab:CreateDropdown({
 local RemoveFriend = FriendsTab:CreateButton({
    Name = "Remove Selected Friend",
    Callback = function()
-    local success = FriendModule:Remove(SelectedFriend)
+    local success = RemoveFriend(SelectedFriend)
     if success then
 
         Rayfield:Notify({
@@ -171,7 +169,7 @@ local RemoveFriend = FriendsTab:CreateButton({
             Image = 134028882209847,
         })
 
-        FriendsDropdown:Refresh(FriendModule:Get())
+        FriendsDropdown:Refresh(GetFriends)
     end
    end,
 })
