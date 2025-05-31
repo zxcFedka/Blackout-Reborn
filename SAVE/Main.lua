@@ -118,7 +118,21 @@ local PlayerColorPicker = VisualTab:CreateColorPicker({
 
 local AddFriendsSection = FriendsTab:CreateSection("Add Friend")
 
-local FriendsDropdown
+local FriendsSection = FriendsTab:CreateSection("Friends")
+
+local SelectedFriend
+
+local FriendsDropdown = FriendsTab:CreateDropdown({
+   Name = "Friends",
+   Options = {},
+   CurrentOption = {},
+   MultipleOptions = false,
+   Flag = "Dropdown1Friends", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Options)
+        SelectedFriend = Options
+        warn(Options)
+   end,
+})
 
 local InputFriend = FriendsTab:CreateInput({
    Name = "Enter Friend Name",
@@ -138,21 +152,6 @@ local InputFriend = FriendsTab:CreateInput({
 
         FriendsDropdown:Refresh(GetFriends())
     end
-   end,
-})
-
-local FriendsSection = FriendsTab:CreateSection("Friends")
-
-local SelectedFriend
-
-FriendsDropdown = FriendsTab:CreateDropdown({
-   Name = "Friends",
-   Options = {},
-   CurrentOption = {},
-   MultipleOptions = false,
-   Flag = "Dropdown1Friends", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Options)
-        SelectedFriend = Options
    end,
 })
 

@@ -47,12 +47,12 @@ local function CreatePoint(Parent)
 end
 
 function module.Set()
-	SafePointPosition = Camera.Position
+	SafePointPosition = Camera.CFrame
 
 	local Point,Distance = CreatePoint(PointFolder)
 
 	Point.Parent = PointFolder
-	Point.Position = SafePointPosition
+	Point.CFrame = SafePointPosition
 	CurrentPoint = Point
 
 	distance = Distance
