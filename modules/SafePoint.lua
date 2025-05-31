@@ -3,6 +3,7 @@ local module = {}
 local SafePointPosition = nil
 
 local Player = game.Players.LocalPlayer
+local Camera = workspace.CurrentCamera
 
 local PointFolder = workspace:FindFirstChild("Pointfolder")
 local CurrentPoint = nil
@@ -46,19 +47,17 @@ local function CreatePoint(Parent)
 end
 
 function module.Set()
-	local Character = Player.Character
-
-	SafePointPosition = Character.PrimaryPart.Position
+	SafePointPosition = Camera.Position
 
 	local Point,Distance = CreatePoint(PointFolder)
 
 	Point.Parent = PointFolder
-	Point.Position = Character.PrimaryPart.Position
+	Point.Position = SafePointPosition
 	CurrentPoint = Point
 
 	distance = Distance
 
-	return Character.PrimaryPart.Position
+	return SafePointPosition
 end
 
 function module.Teleport()

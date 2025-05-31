@@ -2,7 +2,7 @@
 
 local AimbotModule = {}
 
-local FriendsModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Friends.lua'))()
+-- local FriendsModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Friends.lua'))()
 
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
@@ -38,6 +38,9 @@ local function isInFov(targetPosition, cameraCFrame, fovDegrees)
 	return angle <= fovDegrees / 2
 end
 
+local Friends = {}
+
+
 
 local function findNearestTarget()
 	local nearestTargetInstance = nil
@@ -53,7 +56,7 @@ local function findNearestTarget()
 
 	for _, player in ipairs(Players:GetPlayers()) do
 
-		if player ~= localPlayer and not FriendsModule:IsFriend(player.Name)  then
+		if player ~= localPlayer and not Friends[player.Name]  then
 			local character = player.Character
 			if character then
 				local humanoid = character:FindFirstChildOfClass("Humanoid")
@@ -103,6 +106,10 @@ local function onRenderStep(deltaTime)
 		local alpha = math.clamp(deltaTime * Settings.smoothness, 0, 1)
 		camera.CFrame = camera.CFrame:Lerp(newLookCFrame, alpha)
 	end
+end
+
+function AimbotModule.Update(friends)
+	Friends = friends
 end
 
 -- Публичные функции модуля

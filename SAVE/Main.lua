@@ -4,7 +4,6 @@ local EspModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxc
 local FreecamModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Freecam.lua'))()
 local AimbotModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Aimbot.lua'))()
 local SafepointModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/SafePoint.lua'))()
-local FriendsModule = loadstring(game:HttpGet('https://raw.githubusercontent.com/zxcFedka/Blackout-Reborn/refs/heads/main/modules/Friends.lua'))()
 
 local Players = game.Players
 
@@ -28,6 +27,38 @@ local Window = Rayfield:CreateWindow({
 })
 
 warn("Initilize...")
+
+local Friends = {}
+
+local FriendModule = {}
+
+function FriendModule:Add(name: string)
+    if not Friends[name] then
+        Friends[name] = true
+        FriendModule:EventUpdate()
+
+        return true
+    end
+    return nil
+end
+
+function FriendModule:Remove(name: string)
+    if Friends[name] then
+        Friends[name] = nil
+        FriendModule:EventUpdate()
+
+        return true
+    end
+    return nil
+end
+
+function FriendModule:Get()
+    return Friends
+end
+
+function FriendModule:EventUpdate()
+    AimbotModule:Update(Friends)
+end
 
 local Tab = Window:CreateTab("Main")
 
@@ -98,16 +129,16 @@ local InputFriend = FriendsTab:CreateInput({
    RemoveTextAfterFocusLost = false,
    Flag = "Input1",
    Callback = function(Text)
-    local success = FriendsModule:Add(Text)
+    local success = FriendModule:Add(Text)
     if success then
         Rayfield:Notify({
             Title = "Friend Alert",
-            Content = Text.." added",
+            Content = Text.." Added!",
             Duration = 1.5,
             Image = 4483362458,
         })
 
-        FriendsDropdown:Refresh(FriendsModule:GetFriends())
+        FriendsDropdown:Refresh(FriendModule:Get())
     end
    end,
 })
@@ -130,17 +161,17 @@ FriendsDropdown = FriendsTab:CreateDropdown({
 local RemoveFriend = FriendsTab:CreateButton({
    Name = "Remove Selected Friend",
    Callback = function()
-    local success = FriendsModule:Remove(SelectedFriend)
+    local success = FriendModule:Remove(SelectedFriend)
     if success then
 
         Rayfield:Notify({
             Title = "Friend Alert",
-            Content = SelectedFriend.." removed",
+            Content = SelectedFriend.." Removed!",
             Duration = 1.5,
             Image = 134028882209847,
         })
 
-        FriendsDropdown:Refresh(FriendsModule:GetFriends())
+        FriendsDropdown:Refresh(FriendModule:Get())
     end
    end,
 })

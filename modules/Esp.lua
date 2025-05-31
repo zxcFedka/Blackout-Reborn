@@ -305,6 +305,9 @@ local function _onHeartbeat(deltaTime)
 	end
 end
 
+function ESPModule:UpdateFriends(friends)
+	FriendList = friends
+end
 
 function ESPModule:SetFillColor(newColor)
 	if typeof(newColor) == "Color3" then
